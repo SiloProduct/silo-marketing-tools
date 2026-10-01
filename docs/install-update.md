@@ -1,0 +1,41 @@
+# Install and update Silo Marketing Tools
+
+These are instructions for the AI assistant, not a checklist for the teammate. Begin with the conversation and capability routing in [README.md](../README.md); explain the choices in ordinary language and map the answer to `marketing`, `frame`, or `both`. Perform these technical steps yourself. Request a user action only when your tools cannot complete it, and explain that action simply. Reuse an established managed installation when updating. Choose a normal local folder outside Drive, OneDrive, Dropbox, the downloaded source, and the private authoring workspace. Keep the downloaded/checked-out release separate from the installed working folder.
+
+## Prerequisites and source
+
+The helper uses Python 3.9 or newer and its standard library. Marketing-only installation needs no Node, Gemini key, or running service. Frame additionally needs Node 22.13.0 or newer with npm. Check the actual runtimes, install an appropriate runtime if missing, and avoid changing unrelated projects' runtime configuration.
+
+Retrieve the latest approved `main` contents or a selected release tag from [the public repository](https://github.com/SiloProduct/silo-marketing-tools). A Git checkout or extracted GitHub archive is suitable. A teammate does not need to operate Git. Read the repository `AGENTS.md` before installation. All helper commands use explicit absolute source and destination paths; quote paths containing spaces. `python3` is the usual Python launcher on macOS; `py -3` is commonly available on Windows. Discover the installed launcher rather than assuming it exists.
+
+Run `scripts/manage-install.py plan` with `--source`, `--destination`, and `--scope`. Inspect the reported writes, removals and selected component versions. Run `apply` with the same arguments, then `verify` with the destination and scope. The helper can be run directly from the retrieved source; its default source is its containing repository.
+
+The destination receives selected skills under `.agents/skills/`, Frame under `apps/frame/` when selected, shared setup documents/helpers, and `.marketing-tools-install.json`. The manifest tracks file hashes and the installed version of each component. Updates to one scope preserve the files and recorded version of the other scope. Release-level metadata describes the retrieved release; the install manifest records which component versions are actually installed.
+
+Skill loading depends on the agent environment. Open the installed folder as the project so project skills can be discovered, or direct the agent to read the installed `SKILL.md` and references. If the user needs host-specific global registration, follow that host's documented method and record how that registration points to this installation. Do not create another maintained authoring copy or claim every agent automatically discovers `.agents/skills/`.
+
+## Complete Frame setup
+
+After applying the Frame scope, select an absolute Node executable and run `configure-runtime` with the same destination, `--scope frame` or `both`, and `--node`. The helper executes that binary to verify Node 22.13.0 or newer, then records its actual executable path in local `apps/frame/.frame-runtime.json`. This metadata remains private and survives future managed updates. Reconfigure it if the runtime is moved or removed.
+
+From the installed `apps/frame/` folder, run `npm ci` and `npm run build` using npm from the verified Node installation, with its bin directory on the process PATH. Start through the app's supported launcher or `npm start`, then verify local health using the Frame CLI. This builds and checks the app; it does not require paid media generation. See the Frame README and workflow skill for shortcuts and normal operation.
+
+Credentials go into Frame's local Settings screen or private `.env` through an appropriate local channel. Do not ask the teammate to paste a key into chat, include it in commands, or print `.env`. The helper never creates, copies, replaces or removes `.env`, runtime settings, database, media or generated outputs.
+
+## Updating an existing managed installation
+
+Fetch the approved source separately, check its release/changelog, and plan the selected scope against the existing destination. Resolve reported modifications before applying: preserve local edits, compare them to upstream, and obtain the user's intended resolution. There is no force-overwrite switch. Even an identical unowned file is treated as a conflict because the helper has no authorization to take ownership of an existing copied application.
+
+For Frame, check CLI health to identify the actual installation and state directory. Review active jobs, pause production and allow submitted work to settle. Stop the verified service through its supported command before applying. The installer checks configured/default `service.pid` records and local health, refusing app updates while the relevant service or an ambiguous live process is present. It never kills a PID or deletes stale service records. Marketing-only updates do not stop Frame.
+
+After applying Frame updates, repeat `npm ci`, build, restart and CLI health verification. Preserve credentials, saved work and local runtime metadata. Check the release notes for supported data migration requirements; do not modify SQLite directly. The helper removes only pristine previously managed files that are absent from the selected upstream scope. Extra files and local outputs are left alone; it never uses `git clean` or `git reset`.
+
+Run only one install/update operation for a destination at a time. An exclusive destination lock refuses concurrent writers. A hard interruption can leave the lock beside the installation; verify the recorded process is no longer the installer and resolve any recovery snapshot before removing that stale lock. The helper never clears a lock automatically. File replacements are atomic individually; the full installation uses a transaction snapshot to restore previous managed files and manifest if a write fails. A hard interruption may leave `.marketing-tools-backup-*` beside the installation, with `recovery.json`, original files and the previous manifest. A later plan refuses that destination until recovery is resolved. Inspect the recovery record, restore only its previously existing managed files, remove only its recorded newly created managed files if present, restore the prior manifest, and verify before removing the snapshot. If previous files cannot be restored, preserve the snapshot and report the recovery path. Snapshots contain managed code/documents, never `.env` or media.
+
+## Migrating a copied Drive installation
+
+Use a separate destination for the managed installation. Leave the existing folder and its saved files intact. Inspect the old app's local health/state metadata and privately inspect configuration names without revealing credentials. Record the actual absolute state directory, media locations, app location and port. Pause/drain and stop that verified old service before starting the replacement.
+
+Install Frame to the new destination. For the user's requested migration, privately transfer the existing `.env` through local filesystem operations into the new app folder, without printing its contents. Preserve the original. If the old `FRAME_DATA_DIR` is relative, configure the new copy to use the same existing absolute state directory; do not silently resolve it against the new app location. Preserve any existing credentials/settings through this configuration and existing state directory. Do not copy a live database or copy `service.pid` as proof of a running new installation.
+
+Saved media may still reference the original folder by absolute path. Keep that original location accessible and use supported app export/import/relink functionality if available. Do not rewrite database paths directly, delete the original folder, or promise portable cross-machine history when referenced media has not been verified. Create/update shortcuts to the new installation and verify existing tasks and representative saved assets before retiring any old copy. If those checks fail, keep both folders and the existing data intact and resolve the specific missing paths first.

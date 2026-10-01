@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frame Creative Workflow"
+  short_description: "Guide ideas, references, samples and Frame production"
+  default_prompt: "Use $frame-creative-workflow to guide my creative process: suggest a direction, help choose or prepare references, build a draft, and inspect a sample with me before deciding the next step."

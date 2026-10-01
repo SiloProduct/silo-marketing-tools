@@ -1,0 +1,35 @@
+name: Validate marketing tools
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  components:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: apps/frame/package-lock.json
+      - name: Public package and links
+        run: python scripts/prepare-release.py check
+      - name: Installation and publication helpers
+        run: python -m unittest discover -s tests -p "test_*.py"
+      - name: Install locked dependencies
+        run: npm ci
+        working-directory: apps/frame
+      - name: Frame tests without paid requests
+        run: npm test
+        working-directory: apps/frame
+      - name: Build Frame
+        run: npm run build
+        working-directory: apps/frame

@@ -1,0 +1,9 @@
+{
+  "enabled": true,
+  "prompt": "Replace the container contents with {food_items}. Preserve the containers, appliance, arrangement, lighting and framing. Change only the food inside the containers.",
+  "settings": {
+    "model": "gemini-3.1-flash-image",
+    "aspectRatio": "auto",
+    "imageSize": "1K"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Food container — camera and content variations",
+  "prompt": "Animate the supplied starting frame with {camera_movement}. Preserve the containers, appliance, arrangement and lighting. One continuous shot. No dialogue.",
+  "variables": [
+    {
+      "name": "camera_movement",
+      "values": ["a slow clockwise orbit", "a gentle push-in"],
+      "instructions": "Subtle cinematic camera movements around a stationary product arrangement.",
+      "expand": false
+    }
+  ],
+  "settings": {
+    "aspectRatio": "16:9",
+    "resolution": "720p",
+    "task": "auto"
+  },
+  "takes": 1,
+  "mode": "batch"
+}

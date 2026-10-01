@@ -1,0 +1,204 @@
+{
+  "inspection_date": "2026-10-01",
+  "status": "Source links only; no visual assets ship in this skill. Retrieve and inspect authorized originals for the task. Source-photo authenticity is inferred from shoot context rather than independently authenticated. Video frames are inspection timestamps, not verified continuous-action or audio coverage.",
+  "sources": [
+    {
+      "reference_id": "containers-white-four",
+      "source_drive_id": "179KXQmHhQXlYkmh3Y4QTWFQXeIc05Mh0",
+      "source_url": "https://drive.google.com/file/d/179KXQmHhQXlYkmh3Y4QTWFQXeIc05Mh0/view",
+      "kind": "photo",
+      "timestamp_seconds": null,
+      "source_dimensions": [
+        5328,
+        4000
+      ]
+    },
+    {
+      "reference_id": "containers-black-detail",
+      "source_drive_id": "16RXQcCQjNxuIEJl-Bj4kzBD3uMMMUSsG",
+      "source_url": "https://drive.google.com/file/d/16RXQcCQjNxuIEJl-Bj4kzBD3uMMMUSsG/view",
+      "kind": "photo",
+      "timestamp_seconds": null,
+      "source_dimensions": [
+        4000,
+        5328
+      ]
+    },
+    {
+      "reference_id": "base-white-front",
+      "source_drive_id": "1-YBzrTrjHMPhPr5QNMzK3npw1O7BAMn0",
+      "source_url": "https://drive.google.com/file/d/1-YBzrTrjHMPhPr5QNMzK3npw1O7BAMn0/view",
+      "kind": "photo",
+      "timestamp_seconds": null,
+      "source_dimensions": [
+        7952,
+        5304
+      ]
+    },
+    {
+      "reference_id": "base-black-human-contact",
+      "source_drive_id": "13LygJE_Np68k69opIB7_S1mbJW3-03WJ",
+      "source_url": "https://drive.google.com/file/d/13LygJE_Np68k69opIB7_S1mbJW3-03WJ/view",
+      "kind": "photo",
+      "timestamp_seconds": null,
+      "source_dimensions": [
+        4240,
+        2832
+      ]
+    },
+    {
+      "reference_id": "place-carry-2.0s",
+      "source_drive_id": "1Py0W6lrr9AKHd1H5uyG50uEl6msJHTJV",
+      "source_url": "https://drive.google.com/file/d/1Py0W6lrr9AKHd1H5uyG50uEl6msJHTJV/view",
+      "kind": "video_frame",
+      "timestamp_seconds": 2.0,
+      "source_dimensions": [
+        1440,
+        1080
+      ]
+    },
+    {
+      "reference_id": "place-seat-2.6s",
+      "source_drive_id": "1Py0W6lrr9AKHd1H5uyG50uEl6msJHTJV",
+      "source_url": "https://drive.google.com/file/d/1Py0W6lrr9AKHd1H5uyG50uEl6msJHTJV/view",
+      "kind": "video_frame",
+      "timestamp_seconds": 2.6,
+      "source_dimensions": [
+        1440,
+        1080
+      ]
+    },
+    {
+      "reference_id": "place-lid-contact-3.6s",
+      "source_drive_id": "1Py0W6lrr9AKHd1H5uyG50uEl6msJHTJV",
+      "source_url": "https://drive.google.com/file/d/1Py0W6lrr9AKHd1H5uyG50uEl6msJHTJV/view",
+      "kind": "video_frame",
+      "timestamp_seconds": 3.6,
+      "source_dimensions": [
+        1440,
+        1080
+      ]
+    },
+    {
+      "reference_id": "seal-hands-off-2.0s",
+      "source_drive_id": "1cBuvuBLTDVcjBeQWR7l9jpRVjMUOXXPW",
+      "source_url": "https://drive.google.com/file/d/1cBuvuBLTDVcjBeQWR7l9jpRVjMUOXXPW/view",
+      "kind": "video_frame",
+      "timestamp_seconds": 2.0,
+      "source_dimensions": [
+        1440,
+        1080
+      ]
+    },
+    {
+      "reference_id": "seal-progress-5.5s",
+      "source_drive_id": "1cBuvuBLTDVcjBeQWR7l9jpRVjMUOXXPW",
+      "source_url": "https://drive.google.com/file/d/1cBuvuBLTDVcjBeQWR7l9jpRVjMUOXXPW/view",
+      "kind": "video_frame",
+      "timestamp_seconds": 5.5,
+      "source_dimensions": [
+        1440,
+        1080
+      ]
+    },
+    {
+      "reference_id": "seal-lift-7.0s",
+      "source_drive_id": "1cBuvuBLTDVcjBeQWR7l9jpRVjMUOXXPW",
+      "source_url": "https://drive.google.com/file/d/1cBuvuBLTDVcjBeQWR7l9jpRVjMUOXXPW/view",
+      "kind": "video_frame",
+      "timestamp_seconds": 7.0,
+      "source_dimensions": [
+        1440,
+        1080
+      ]
+    },
+    {
+      "reference_id": "store-fridge-1.4s",
+      "source_drive_id": "1bHxYyIP3OLgN4hrj0pHNlR3IdBRAQRRk",
+      "source_url": "https://drive.google.com/file/d/1bHxYyIP3OLgN4hrj0pHNlR3IdBRAQRRk/view",
+      "kind": "video_frame",
+      "timestamp_seconds": 1.4,
+      "source_dimensions": [
+        1440,
+        1080
+      ]
+    },
+    {
+      "reference_id": "rocker-contact-268.5s",
+      "source_drive_id": "1rM_GA_CTzSy9LHSWNNrNv2-2HXuyLk9B",
+      "source_url": "https://drive.google.com/file/d/1rM_GA_CTzSy9LHSWNNrNv2-2HXuyLk9B/view",
+      "kind": "video_frame",
+      "timestamp_seconds": 268.5,
+      "source_dimensions": [
+        1080,
+        1500
+      ]
+    },
+    {
+      "reference_id": "rocker-tilted-270.0s",
+      "source_drive_id": "1rM_GA_CTzSy9LHSWNNrNv2-2HXuyLk9B",
+      "source_url": "https://drive.google.com/file/d/1rM_GA_CTzSy9LHSWNNrNv2-2HXuyLk9B/view",
+      "kind": "video_frame",
+      "timestamp_seconds": 270.0,
+      "source_dimensions": [
+        1080,
+        1500
+      ]
+    },
+    {
+      "reference_id": "lid-handling-6.5s",
+      "source_drive_id": "1WqxagKMQhT6zlMXQ-5zjhXcJWByQDkFo",
+      "source_url": "https://drive.google.com/file/d/1WqxagKMQhT6zlMXQ-5zjhXcJWByQDkFo/view",
+      "kind": "video_frame",
+      "timestamp_seconds": 6.5,
+      "source_dimensions": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "reference_id": "lid-detached-7.5s",
+      "source_drive_id": "1WqxagKMQhT6zlMXQ-5zjhXcJWByQDkFo",
+      "source_url": "https://drive.google.com/file/d/1WqxagKMQhT6zlMXQ-5zjhXcJWByQDkFo/view",
+      "kind": "video_frame",
+      "timestamp_seconds": 7.5,
+      "source_dimensions": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "reference_id": "setup-rear-cord-15.0s",
+      "source_drive_id": "1Veq30JcKeRP_fFqTjC35Hq3K8_fYWD5P",
+      "source_url": "https://drive.google.com/file/d/1Veq30JcKeRP_fFqTjC35Hq3K8_fYWD5P/view",
+      "kind": "video_frame",
+      "timestamp_seconds": 15,
+      "source_dimensions": [
+        1080,
+        1918
+      ]
+    },
+    {
+      "reference_id": "stow-render-flat-16.75s",
+      "source_drive_id": null,
+      "source_url": "https://hey-silo.b-cdn.net/5%20Scroll%20updated.mp4",
+      "kind": "rendered_video_frame",
+      "timestamp_seconds": 16.75,
+      "source_dimensions": [
+        1760,
+        730
+      ]
+    },
+    {
+      "reference_id": "stow-render-upright-18.5s",
+      "source_drive_id": null,
+      "source_url": "https://hey-silo.b-cdn.net/5%20Scroll%20updated.mp4",
+      "kind": "rendered_video_frame",
+      "timestamp_seconds": 18.5,
+      "source_dimensions": [
+        1760,
+        730
+      ]
+    }
+  ]
+}

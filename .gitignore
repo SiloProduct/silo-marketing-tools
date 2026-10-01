@@ -1,0 +1,23 @@
+# Local credentials and Frame workspaces must never enter distribution history.
+.env
+.env.*
+!.env.example
+.env-*.tmp
+.frame/
+.frame-build-check/
+node_modules/
+dist/
+playwright-report/
+test-results/
+*.log
+.DS_Store
+scratch/
+.frame-runtime.json
+.silo-marketing-install.json
+.silo-marketing-update.lock
+.silo-marketing-backups/
+.marketing-tools-install.json
+.marketing-tools-backup-*/
+.marketing-tools-update.lock
+__pycache__/
+*.pyc
