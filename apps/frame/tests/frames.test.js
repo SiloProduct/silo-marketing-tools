@@ -351,7 +351,9 @@ test("five frame combinations × three camera moves × four takes create five im
   assert.ok(frames.every((j) => j.snapshot.parentId === f.source.id));
   assert.ok(
     frames.every((j) =>
-      f.store.get("assets", j.assetId).file.includes("references/generated/"),
+      f.store
+        .get("assets", j.assetId)
+        .file.includes(path.join("references", "generated") + path.sep),
     ),
   );
   assert.deepEqual(frameStats(f.task, f.store), { total: 5, ready: 5 });

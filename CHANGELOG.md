@@ -1,5 +1,9 @@
 # Changes
 
+## 1.0.2
+
+- Make the generated-image folder assertion use native path separators so the same Frame production test runs on Windows and Unix. App/skill component versions remain 1.0.0.
+
 ## 1.0.1
 
 - Read publication metadata and multilingual guidance explicitly as UTF-8 on Windows and other hosts; preserve LF bytes when refreshing the public manifest.
