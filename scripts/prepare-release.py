@@ -108,7 +108,7 @@ def known_local_secrets(root):
     if not p.is_file():
         return []
     secrets = []
-    for line in p.read_text().splitlines():
+    for line in p.read_text(encoding='utf-8').splitlines():
         m = re.match(r'^\s*(?:export\s+)?(?:GEMINI_API_KEY|GOOGLE_API_KEY)\s*=\s*(.*?)\s*$', line)
         if m:
             value = m[1].strip().strip('\"\x27').encode()
@@ -122,7 +122,7 @@ def check_links(root, names):
     for name in names:
         if not name.endswith('.md'):
             continue
-        content = file_at(root, name).read_text()
+        content = file_at(root, name).read_text(encoding='utf-8')
         for target in re.findall(r'\[[^\]]*\]\(([^\n)]+)\)', content):
             target = target.strip().strip('<>')
             if re.match(r'^[a-zA-Z][a-zA-Z0-9+.-]*:', target) or target.startswith('#'):
@@ -141,7 +141,7 @@ def check_links(root, names):
 
 
 def validate(root, exact_layout=True):
-    data = json.loads(file_at(root, MANIFEST).read_text())
+    data = json.loads(file_at(root, MANIFEST).read_text(encoding='utf-8'))
     names = data.get('files')
     if data.get('schema_version') != 1 or not isinstance(names, list) or names != sorted(set(names)):
         fail('Invalid distribution manifest')
@@ -156,10 +156,10 @@ def validate(root, exact_layout=True):
     scan(root, names, known_local_secrets(root))
     check_links(root, names)
     for skill in ['silo-visual-marketing', 'frame-creative-workflow']:
-        text = (root / '.agents/skills' / skill / 'SKILL.md').read_text()
+        text = (root / '.agents/skills' / skill / 'SKILL.md').read_text(encoding='utf-8')
         if not text.startswith('---\n') or not re.search(r'^name:\s*' + skill + r'\s*$', text, re.M) or 'description:' not in text.split('---', 2)[1]:
             fail('Invalid skill metadata: ' + skill)
-    release = json.loads((root / 'release.json').read_text())
+    release = json.loads((root / 'release.json').read_text(encoding='utf-8'))
     if release.get('schema_version') != 1 or set(release.get('components', {})) != {'marketing', 'frame'}:
         fail('Invalid release metadata')
     return data
@@ -230,13 +230,13 @@ def main():
         check_links(root, names)
         data = {'schema_version': 1, 'files': names,
                 'sha256': {n: digest(file_at(root, n)) for n in names if n != MANIFEST}}
-        (root / MANIFEST).write_text(json.dumps(data, indent=2) + '\n')
+        (root / MANIFEST).write_bytes((json.dumps(data, indent=2) + '\n').encode('utf-8'))
     data = validate(root)
     if args.command == 'export':
         if args.destination is None:
             fail('Supply --destination for export')
         export(root, args.destination, data, args.update_reviewed_draft)
-    print(json.dumps({'ok': True, 'command': args.command, 'version': json.loads((root / 'release.json').read_text())['version'], 'public_files': len(data['files'])}))
+    print(json.dumps({'ok': True, 'command': args.command, 'version': json.loads((root / 'release.json').read_text(encoding='utf-8'))['version'], 'public_files': len(data['files'])}))
 
 
 if __name__ == '__main__':

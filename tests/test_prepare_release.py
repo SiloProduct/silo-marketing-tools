@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 SPEC = importlib.util.spec_from_file_location('prepare_release', Path(__file__).resolve().parents[1] / 'scripts/prepare-release.py')
 release = importlib.util.module_from_spec(SPEC)
@@ -20,11 +21,11 @@ class PublicReleaseTests(unittest.TestCase):
                 continue
             p = self.source / name
             p.parent.mkdir(parents=True, exist_ok=True)
-            p.write_text('Public source\n')
+            p.write_bytes(b'Public source\n')
         for tree in release.TREES:
             p = self.source / tree / 'content.md'
             p.parent.mkdir(parents=True, exist_ok=True)
-            p.write_text('Public source\n')
+            p.write_bytes(b'Public source\n')
         for skill in ['silo-visual-marketing', 'frame-creative-workflow']:
             (self.source / '.agents/skills' / skill / 'SKILL.md').write_text('---\nname: ' + skill + '\ndescription: Shared guidance\n---\n')
         (self.source / 'release.json').write_text(json.dumps({'schema_version': 1, 'version': '1.0.0', 'components': {'marketing': {}, 'frame': {}}}))
@@ -88,6 +89,26 @@ class PublicReleaseTests(unittest.TestCase):
         (self.source / 'README.md').write_text('[Missing](docs/missing.md)')
         with self.assertRaisesRegex(ValueError, 'unresolved public link'):
             release.check_links(self.source, release.public_files(self.source))
+
+    def test_multilingual_package_uses_utf8_with_legacy_default(self):
+        content = 'הנחיות לצוות — “Frame”\n[התקנה](docs/install-update.md)\n'
+        (self.source / 'README.md').write_bytes(content.encode('utf-8'))
+        for skill in ['silo-visual-marketing', 'frame-creative-workflow']:
+            (self.source / '.agents/skills' / skill / 'SKILL.md').write_bytes(
+                ('---\nname: ' + skill + '\ndescription: הנחיות\n---\n').encode('utf-8'))
+        (self.source / 'apps/frame/.env').write_bytes('# הגדרה פרטית\nGEMINI_API_KEY=\n'.encode('utf-8'))
+        self.refresh()
+        original_read = Path.read_text
+
+        def legacy_read(path, encoding=None, errors=None):
+            return original_read(path, encoding=encoding or 'cp1252', errors=errors)
+
+        with patch.object(Path, 'read_text', legacy_read):
+            data = release.validate(self.source)
+            destination = self.base / 'publication'
+            release.export(self.source, destination, data)
+        self.assertEqual((destination / 'README.md').read_bytes(), content.encode('utf-8'))
+        self.assertFalse((destination / 'apps/frame/.env').exists())
 
     def test_symlink_source_refused(self):
         p = self.source / 'apps/frame/server/content.md'
@@ -153,7 +174,7 @@ class PublicReleaseTests(unittest.TestCase):
         import subprocess
         subprocess.run(['git', 'init', '-q', str(self.source)], check=True)
         attributes = self.source / '.gitattributes'
-        attributes.write_text('* text eol=lf\n')
+        attributes.write_bytes(b'* text eol=lf\n')
         subprocess.run(['git', '-C', str(self.source), 'config', 'core.autocrlf', 'true'], check=True)
         subprocess.run(['git', '-C', str(self.source), 'add', '.gitattributes', 'README.md'], check=True)
         original = (self.source / 'README.md').read_bytes()

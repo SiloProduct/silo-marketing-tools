@@ -1,5 +1,10 @@
 # Changes
 
+## 1.0.1
+
+- Read publication metadata and multilingual guidance explicitly as UTF-8 on Windows and other hosts; preserve LF bytes when refreshing the public manifest.
+- Add coverage for Hebrew documentation under a legacy default encoding and use platform-independent line endings in checkout fixtures. Component app/skill versions remain 1.0.0.
+
 ## 1.0.0
 
 - Share Silo Visual Marketing and Frame in one repository with separate installation scopes.
