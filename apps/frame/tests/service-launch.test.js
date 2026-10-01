@@ -12,7 +12,15 @@ function fixture(t) {
   const dataDir = path.join(root, "state");
   fs.mkdirSync(dataDir);
   fs.mkdirSync(path.join(root, "dist"));
-  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  // Windows can retain the stopped child's directory lock briefly.
+  t.after(() =>
+    fs.promises.rm(root, {
+      recursive: true,
+      force: true,
+      maxRetries: 10,
+      retryDelay: 100,
+    }),
+  );
   return { root, dataDir };
 }
 async function listener(t, reply) {

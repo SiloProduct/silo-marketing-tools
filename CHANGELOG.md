@@ -1,5 +1,9 @@
 # Changes
 
+## 1.0.3
+
+- Allow bounded asynchronous retries when removing service-test folders briefly locked after Windows process exit. Service ownership and stop assertions remain intact; app/skill components remain 1.0.0.
+
 ## 1.0.2
 
 - Make the generated-image folder assertion use native path separators so the same Frame production test runs on Windows and Unix. App/skill component versions remain 1.0.0.
