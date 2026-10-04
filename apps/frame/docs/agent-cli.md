@@ -178,7 +178,7 @@ For uncertain requests, reconcile a known Google interaction ID first. A retry t
 
 Destructive commands require `--confirm`. Task deletion keeps local media by default; `--delete-media` explicitly removes it. Studio asset deletion removes its managed media and sidecar. In-use assets and task-owned media retain the API's existing protections.
 
-`settings get` reports the output directory and connection presence. `settings set --output-dir /local/path` sets the directory for new tasks. `connection check` verifies account access. For complete shutdown, pause tasks first, then `service stop --confirm`. The browser can close while production continues; the computer and local service must remain running and awake.
+`settings get` reports the output directory and connection presence. `settings set --output-dir /local/path` sets the directory for new tasks. `connection check` reports `checkScope: "model-list"`, listed models and a `warning`; it does not verify generation or retrieval of video results. `videoAvailable` means the video model was listed. For complete shutdown, pause tasks first, then `service stop --confirm`. The browser can close while production continues; the computer and local service must remain running and awake.
 
 ## Runnable example sequence
 

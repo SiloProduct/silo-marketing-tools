@@ -26,7 +26,7 @@ On macOS, use the same local-installation, private-key and personal-storage prin
 
 ## Connect from the agent
 
-From the verified app root, inspect the relevant CLI commands: `--help`, `schema task`, `service status`, `status`, `capabilities`, `settings get`, and `connection check`. Use `service start` only when not already running and the installation is ready. Help/schema work without a service. `connection check` checks account access without media generation; key presence alone does not establish model access. A successful session check need not be repeated before every generation unless evidence changes.
+From the verified app root, inspect the relevant CLI commands: `--help`, `schema task`, `service status`, `status`, `capabilities`, `settings get`, and `connection check`. Use `service start` only when not already running and the installation is ready. Help/schema work without a service. `connection check` only checks model-list access without media generation; listed models do not establish generation or video-result retrieval. Read its `warning` and do not present `videoAvailable` as an end-to-end test. A successful session check need not be repeated before every generation unless evidence changes.
 
 Use the returned UI URL/configured port rather than assuming 4310 in a customized installation. Identify an occupied port's listener before changing anything; never kill an unknown process or trust a stale/copied PID. Do not disable security settings or make broad source changes to disguise an installation issue.
 
@@ -35,6 +35,8 @@ The browser may close while production continues on an awake, connected computer
 ## Gemini key
 
 No credential is included in the public repository. Create `.env` from `.env.example` only if no `.env` exists; never overwrite an existing configuration. The user obtains a key privately from their account owner or team administrator and enters it directly in **Settings → Gemini connection → Gemini API key → Save connection**. Do not request it in chat, pass it as a CLI argument, dump the file or expose it in logs/screenshots. Check key presence through the CLI or report only whether a supported key is nonempty.
+
+Google supports both standard and authorization keys; do not reject `AQ.` solely by prefix. For Google’s “Multiple authentication credentials” response during interaction retrieval, ask the account owner for another key verified for video generation and have the user save it privately in Settings. Preserve and inspect the submitted interaction ID before retrying; changing a key does not authorize a new paid submission. See [Google’s key documentation](https://ai.google.dev/gemini-api/docs/api-key).
 
 Setup and drafts can continue without a key. Explain a rejected key/model/access error from the actual response; do not repeatedly submit media requests or silently switch accounts/models.
 

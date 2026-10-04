@@ -657,6 +657,7 @@ function SettingsPage({ state, refresh, notify }) {
               try {
                 await api("/connection/key", { key: apiKey });
                 setApiKey("");
+                setResult(null);
                 await refresh();
                 notify("Connection key saved on this computer.");
               } catch (e) {
@@ -673,12 +674,15 @@ function SettingsPage({ state, refresh, notify }) {
             disabled={!state.connection.configured}
             onClick={async () => {
               setBusy(true);
+              setResult(null);
               try {
                 const r = await api("/connection/check", {});
                 setResult(
-                  r.videoAvailable
-                    ? "Connected. Omni is available to your account."
-                    : "Connected. Omni was not listed for your account; check model access in Google AI Studio.",
+                  `${
+                    r.videoAvailable
+                      ? "Google accepted the key for model listing. Omni is listed for your account."
+                      : "Google accepted the key for model listing. Omni was not listed; check model access in Google AI Studio."
+                  } ${r.warning}`,
                 );
               } catch (e) {
                 notify(e.message, true);

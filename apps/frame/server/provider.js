@@ -63,12 +63,15 @@ export class GeminiProvider {
     const data = await response.json().catch(() => ({}));
     if (!response.ok) {
       const friendly =
-        response.status === 401 || response.status === 403
-          ? "Google could not authorize this request. Check your API key, billing, and model access."
-          : response.status === 429
-            ? "Google’s usage limit was reached. Waiting before trying again."
-            : data.error?.message ||
-              `Google returned an error (${response.status}).`;
+        response.status === 400 &&
+        /multiple authentication credentials/i.test(data.error?.message || "")
+          ? "Google rejected this interaction's authentication. This has been reported with some AQ. keys even when Check connection passes. Ask your account owner for another Gemini key verified for video generation, then save it in Settings. A submitted interaction may still exist; check its status before retrying."
+          : response.status === 401 || response.status === 403
+            ? "Google could not authorize this request. Check your API key, billing, and model access."
+            : response.status === 429
+              ? "Google’s usage limit was reached. Waiting before trying again."
+              : data.error?.message ||
+                `Google returned an error (${response.status}).`;
       throw new ProviderError(friendly, {
         status: response.status,
         retryable: response.status === 429 || (!body && response.status >= 500),
@@ -144,6 +147,8 @@ export class GeminiProvider {
         ? this.mediaInput(snapshot.prompt, additional)
         : snapshot.prompt;
     }
+    if (snapshot.settings.model === "gemini-3.1-flash-image")
+      body.generation_config = { thinking_level: "high" };
     if (!image && snapshot.settings.task && snapshot.settings.task !== "auto")
       body.generation_config = {
         video_config: { task: snapshot.settings.task },

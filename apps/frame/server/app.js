@@ -1038,6 +1038,10 @@ export function createApp(
       ok: true,
       videoAvailable: models.includes(VIDEO_MODEL),
       models,
+      checkScope: "model-list",
+      warning: provider.key.startsWith("AQ.")
+        ? "This checks model listing only, not generation or retrieval of video results. Some AQ. keys have passed this check but failed video polling. If that happens, ask your account owner for another key verified for video generation."
+        : "This checks model listing only, not generation or retrieval of video results.",
     });
   });
   app.use("/api", (err, req, res, next) => {

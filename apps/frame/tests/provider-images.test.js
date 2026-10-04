@@ -34,6 +34,12 @@ for (const model of IMAGE_MODELS) {
       assert.equal(route, "interactions");
       assert.equal(Object.hasOwn(body, "background"), false);
       assert.equal(body.store, true);
+      assert.deepEqual(
+        body.generation_config,
+        model === "gemini-3.1-flash-image"
+          ? { thinking_level: "high" }
+          : undefined,
+      );
       assert.deepEqual(body.response_format, {
         type: "image",
         aspect_ratio: "16:9",
@@ -43,6 +49,26 @@ for (const model of IMAGE_MODELS) {
     assert.equal(requests[1].body.previous_interaction_id, "previous-image");
   });
 }
+
+test("video generation keeps its mode without an image thinking setting", async () => {
+  const provider = new GeminiProvider("test-only");
+  provider.request = async (_route, body) => {
+    assert.equal(body.background, true);
+    assert.deepEqual(body.generation_config, {
+      video_config: { task: "text_to_video" },
+    });
+    return {};
+  };
+  await provider.submit({
+    prompt: "a fish!",
+    settings: {
+      model: "gemini-omni-1.1-flash",
+      aspectRatio: "16:9",
+      resolution: "720p",
+      task: "text_to_video",
+    },
+  });
+});
 
 test("local worker saves a synchronous image response without polling or resubmission", async (t) => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "frame-image-test-"));

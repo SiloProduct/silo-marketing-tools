@@ -47,11 +47,27 @@ test("connection setup accepts dotted keys without returning the credential", as
     assert.equal(provider.key, key);
     return { models: [] };
   };
-  await call("post", "/connection/check").send({}).expect(200);
+  const checked = await call("post", "/connection/check").send({}).expect(200);
+  assert.equal(checked.body.checkScope, "model-list");
+  assert.match(checked.body.warning, /failed video polling/);
+  assert.ok(!JSON.stringify(checked.body).includes(key));
   await call("post", "/connection/key")
     .send({ key: key + "\nINJECTED=value" })
     .expect(400);
   assert.equal(provider.key, key);
+});
+test("connection check with a standard key lists models without claiming generation was tested", async (t) => {
+  const { call, provider } = fixture(t);
+  provider.key = "AIza" + "test-only_".repeat(4);
+  provider.request = async (route) => {
+    assert.equal(route, "models");
+    return { models: [{ name: "models/gemini-omni-1.1-flash" }] };
+  };
+  const checked = await call("post", "/connection/check").send({}).expect(200);
+  assert.equal(checked.body.videoAvailable, true);
+  assert.equal(checked.body.checkScope, "model-list");
+  assert.match(checked.body.warning, /model listing only/);
+  assert.doesNotMatch(checked.body.warning, /AQ\./);
 });
 test("multiple image APIs target the chosen source, preserve roles, and duplicate without generated history", async (t) => {
   const { call, store, provider, worker } = fixture(t);

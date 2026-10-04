@@ -1,5 +1,12 @@
 # Changes
 
+## 1.0.5
+
+- Frame 1.0.2 sends high thinking for Flash Image generation and refinement, including task image variations. Pro Image, video and text assistance keep their existing settings.
+- Explain interaction authentication conflicts with recovery guidance; keep standard and authorization key formats accepted.
+- Report connection checks as model listing only, show a polling advisory for AQ. keys and clear stale check results when a key is replaced.
+- Update Frame setup and workflow guidance; no automatic paid connection probe or resubmission is added.
+
 ## 1.0.4
 
 - Frame 1.0.1 accepts dotted Gemini auth keys and tokens longer than the previous 200-character limit when saved through Settings. Local checks reject malformed input; Google account access is checked separately.
