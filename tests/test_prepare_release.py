@@ -80,6 +80,13 @@ class PublicReleaseTests(unittest.TestCase):
             release.scan(self.source, ['README.md'], release.known_local_secrets(self.source))
         self.assertNotIn(secret, str(error.exception))
 
+    def test_dotted_auth_credential_refused_without_printing(self):
+        secret = 'AQ.' + 'test-only_' * 35
+        (self.source / 'README.md').write_text(secret, encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, 'credential signature') as error:
+            release.scan(self.source, ['README.md'])
+        self.assertNotIn(secret, str(error.exception))
+
     def test_external_local_markdown_links_refused(self):
         (self.source / 'README.md').write_text('[Private](../private.md)')
         with self.assertRaisesRegex(ValueError, 'leaves public package'):

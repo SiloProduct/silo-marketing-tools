@@ -27,7 +27,7 @@ SUFFIXES = {'.md', '.json', '.yaml', '.yml', '.js', '.jsx', '.css', '.html', '.p
 FORBIDDEN_PARTS = {'research', 'team-input', 'scratch', 'assets', 'node_modules', 'dist',
                    '.frame', '.frame-build-check', 'test-results', 'playwright-report',
                    '__pycache__', '.git', '.silo-marketing-backups'}
-SECRET_PATTERNS = [rb'AIza[0-9A-Za-z_-]{30,}', rb'gh[pousr]_[0-9A-Za-z]{30,}',
+SECRET_PATTERNS = [rb'AIza[0-9A-Za-z_-]{30,}', rb'\bAQ\.[0-9A-Za-z_.-]{30,}', rb'gh[pousr]_[0-9A-Za-z]{30,}',
                    rb'github_pat_[0-9A-Za-z_]{30,}', rb'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----',
                    rb'(?im)^\s*(?:GEMINI_API_KEY|GOOGLE_API_KEY)\s*=\s*[^\s#\r\n]+']
 

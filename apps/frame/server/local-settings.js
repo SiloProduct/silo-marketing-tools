@@ -5,8 +5,11 @@ import { promisify } from "node:util";
 import { uid } from "./domain.js";
 
 export function saveApiKey(file, key) {
-  if (typeof key !== "string" || !/^[-_a-zA-Z0-9]{20,200}$/.test(key.trim()))
-    throw new Error("Enter a valid Google AI Studio API key.");
+  // Check safe token storage; Google determines whether the key is authorized.
+  if (typeof key !== "string" || !/^[-._a-zA-Z0-9]{20,2048}$/.test(key.trim()))
+    throw new Error(
+      "Paste the complete Google AI Studio API key, without spaces or line breaks.",
+    );
   const value = key.trim();
   const previous = fs.existsSync(file) ? fs.readFileSync(file, "utf8") : "";
   const line = `GEMINI_API_KEY=${value}`;

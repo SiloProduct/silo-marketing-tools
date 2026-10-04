@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "1.0.3",
+  "version": "1.0.4",
   "repository": "https://github.com/SiloProduct/silo-marketing-tools",
   "components": {
     "marketing": {
@@ -8,7 +8,7 @@
       "skill": ".agents/skills/silo-visual-marketing"
     },
     "frame": {
-      "version": "1.0.0",
+      "version": "1.0.1",
       "app": "apps/frame",
       "skill": ".agents/skills/frame-creative-workflow",
       "node_minimum": "22.13.0"

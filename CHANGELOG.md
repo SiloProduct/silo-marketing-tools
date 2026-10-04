@@ -1,5 +1,10 @@
 # Changes
 
+## 1.0.4
+
+- Frame 1.0.1 accepts dotted Gemini auth keys and tokens longer than the previous 200-character limit when saved through Settings. Local checks reject malformed input; Google account access is checked separately.
+- Keep configuration private and unchanged on rejected input, and include dotted auth-key signatures in the public-content scan.
+
 ## 1.0.3
 
 - Allow bounded asynchronous retries when removing service-test folders briefly locked after Windows process exit. Service ownership and stop assertions remain intact; app/skill components remain 1.0.0.

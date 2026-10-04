@@ -21,7 +21,9 @@ function fixture(t) {
       }),
     },
     worker = new Worker(store, provider),
-    app = createApp(store, worker, provider);
+    app = createApp(store, worker, provider, {
+      envPath: path.join(dir, ".env"),
+    });
   t.after(() => {
     store.close();
     fs.rmSync(dir, { recursive: true, force: true });
@@ -30,6 +32,27 @@ function fixture(t) {
     request(app)[method](`/api${url}`).set("x-frame-request", "1");
   return { store, provider, worker, app, call };
 }
+
+test("connection setup accepts dotted keys without returning the credential", async (t) => {
+  const { call, provider } = fixture(t);
+  const key = "AQ." + "test-only_".repeat(35);
+  const response = await call("post", "/connection/key")
+    .send({ key })
+    .expect(200);
+  assert.deepEqual(response.body, { configured: true });
+  assert.equal(provider.key, key);
+  assert.ok(!JSON.stringify((await call("get", "/state")).body).includes(key));
+  provider.request = async (route) => {
+    assert.equal(route, "models");
+    assert.equal(provider.key, key);
+    return { models: [] };
+  };
+  await call("post", "/connection/check").send({}).expect(200);
+  await call("post", "/connection/key")
+    .send({ key: key + "\nINJECTED=value" })
+    .expect(400);
+  assert.equal(provider.key, key);
+});
 test("multiple image APIs target the chosen source, preserve roles, and duplicate without generated history", async (t) => {
   const { call, store, provider, worker } = fixture(t);
   let task = (await call("post", "/tasks").send({})).body;
